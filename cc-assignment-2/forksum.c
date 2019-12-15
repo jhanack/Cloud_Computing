@@ -19,19 +19,75 @@ int parseInt(char *str, char *errMsg);
 // Before spawning the child process, spawnChild creates a bidirectional pipe. One side of the pipe is returned to the caller,
 // the other side is used by the child process to output results.
 int spawnChild(int start, int end) {
-	
-	// TOD Implement me
 
-	return 0;
+    // bidirectional pipe to write and read with parent/child
+    int pipe_fds[2];
+
+    // check if pipe returned an error
+    if (pipe(pipe_fds) < 0) {
+        exit(1);
+    }
+
+    // create new fork
+    pid_t p;
+    p = fork();
+
+    if (p < 0) {
+        fprintf(stderr, "Fork failed!\n" );
+        return 1;
+    } else if (p > 0) {
+        // PARENT process code
+        return pipe_fds[0];
+    } else {
+        // CHILD process code
+        Result child_result = forksum(start, end);
+
+        // transform result into char buffers
+        char sum_msg[11], num_msg[11];
+        sprintf(sum_msg, "%d", child_result.sum);
+        sprintf(num_msg, "%d", child_result.num);
+
+        // write buffers to pipe
+        write(pipe_fds[1], sum_msg, 11);
+        write(pipe_fds[1], num_msg, 11);
+
+        exit(0);
+    }
+
+    // should not be reached -- sanity check condition
+    return -1;
 }
 
 // readChild reads data from the given file descriptor and parses it to a Result struct.
 // This reads the result data written by a child process in spawnChild().
 Result readChild(int fd) {
 		
-	// TOD Implement me
+	// read result from file descriptor
+	int bytes_read;
+	char buf_sum[11], buf_num[11];
+	int result_sum, result_num;
 
-	return (Result) {0, 0};
+    // read sum
+    bytes_read = read(fd, buf_sum, 11);
+    if (bytes_read <= 0) {
+        // error while reading or empty stream
+        fprintf(stderr, "readChild: error while reading sum from pipe or no data in pipe.\n");
+        exit(1);
+    } else {
+        result_sum = parseInt(buf_sum, "readChild: error while parsing sum buffer.");
+    }
+
+    // read num
+    bytes_read = read(fd, buf_num, 11);
+    if (bytes_read <= 0) {
+        // error while reading or empty stream
+        fprintf(stderr, "readChild: error while reading num from pipe or no data in pipe.\n");
+        exit(1);
+    } else {
+        result_num = parseInt(buf_num, "readChild: error while parsing num buffer.");
+    }
+
+	return (Result) {result_sum, result_num};
 }
 
 // forksum computes the sum of all numbers in the given range (inclusive) by spawning 2 child processes.
