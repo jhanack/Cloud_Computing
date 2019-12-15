@@ -1,0 +1,46 @@
+CPU
+	1. The CPU benchmark performs calculations of prime numbers until a given
+	value or the specified runtime is over (in our case one minute).
+	Since we haven't set the threads parameter, we use the default option
+	with only one thread. The measured value (in events/s) states how
+	many calculations went through within the minute.
+
+	2. In the plot there are many small ups and downs, but for AWS and GCP
+	trend lines can easily be seen. For GCP there are two mayor outliers
+	in the plot, which are round about noon. This indicates an
+	overall good performance and consistency. For AWS the trend line is
+	still easily visible, but there is much more oscillation and three
+	major outliers. Those outliers don't fit in a pattern on first sight
+	(as for GCP). Overall the events/s were about 10% more for GCP
+	compared to AWS. Reasons for these findings could, for example, 
+	be maintenance work or load based side effects.
+
+Memory
+	1. The MEM benchmark measures sequential memory access (read and write). Therefore
+	it transfers data of size --memory-total-size (in this case 100TB) into a memory
+	block of size --memory-block-size (in this case 4KB).
+
+	2. Since there are additional steps required to translate virtual addresses to
+	physical addresses (namely guest virtual -> guest physical -> host physical) the
+	benchmark results should be affected negatively by the virtualisation overhead.
+
+Disk
+	1. To allow benchmarks for disk, the prepare call is required to generate a
+	data file(s). Afterwards the run option of the benchmark can be used to collect
+	performance measures for various file I/O types (in our case for sequential and
+	random read). Apart from performance measures, the test also ensures correctness
+	of the operations by comparing the data with known checksums.
+
+	2. For AWS the sequential read outperformed the random read, which indicate, that	the AWS instance runs on hardware containing HDD memory. The results of GCP lead
+	to the assumption, that the used hardware contains SSD memory, but still we were
+	surprised by the drastical difference between random and sequential read.
+
+General:
+	1. AWS only outperformed GCP in the sequential memory read benchmark. Therefore
+	an optimal application would utilise strong data locality and huge read loads.
+	An example could be a read heavy database system, where the requests mostly
+	contain OLAP queries with range predicates on sorted data. Since GCP outperformed
+	AWS on the CPU benchmark, which allows the usage within compute intense
+	applications. As an example it could be used as a server for training machine
+	learning models (can also be optimised with GPUs, but not all technologies 
+	support GPU acceleration).
