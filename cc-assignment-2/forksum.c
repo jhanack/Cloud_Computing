@@ -4,7 +4,6 @@
 #include <time.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include <pthread.h>
 
 // The Result struct contains the result of the sum operation and a counter for the number of fork operations.
 typedef struct Result {
@@ -20,25 +19,8 @@ int parseInt(char *str, char *errMsg);
 // Before spawning the child process, spawnChild creates a bidirectional pipe. One side of the pipe is returned to the caller,
 // the other side is used by the child process to output results.
 int spawnChild(int start, int end) {
-
 	
-	pthread_t thread;
-    int err;
-    int result;
-
-    err = pthread_create(&thread, NULL, forksum(start,end), &result);
-
-    if (err)
-    {
-        printf("An error occured: %d", err);
-        return 1;
-    }
-
-    printf("Waiting for the thread to end...\n");
-
-    pthread_join(thread, NULL);
-
-    printf("Thread ended.\n");    
+	// TOD Implement me
 
 	return 0;
 }
