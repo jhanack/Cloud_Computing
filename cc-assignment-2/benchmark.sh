@@ -4,6 +4,23 @@
 time=$(date +%s)
 runtime=5
 
+# make c programm
+discard=$(make forksum)
+
+# Calculate time to run
+end=$((SECONDS+runtime))
+
+num_executions=0
+
+while [ $SECONDS -lt $end ]; do
+	threads=$(./forksum 100 6000)
+	num_executions=$(($num_executions + 1))
+done
+
+echo "$num_executions"
+
+
+
 # Run the sysbench CPU test and extract the "events per second" line.
 1>&2 echo "Running CPU test..."
 cpu=$(sysbench --time=$runtime cpu run | grep "events per second" | awk '/ [0-9.]*$/{print $NF}')
