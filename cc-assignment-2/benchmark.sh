@@ -23,5 +23,13 @@ diskSeq=$(sysbench --time=$runtime --file-test-mode=seqrd --file-total-size=1G -
 1>&2 echo "Running fileio random read test..."
 diskRand=$(sysbench --time=$runtime --file-test-mode=rndrd --file-total-size=1G --file-num=1 --file-extra-flags=direct fileio run | grep "read, MiB" | awk '/ [0-9.]*$/{print $NF}')
 
+# test network performance with iperf3 and extract desired KPI via grep
+# PARAMETERS:
+#    -c 35.223.83.97: client side iperf connecting to specified server IP
+#    -t 60: run benchmark for 60 seconds
+#    -4: use IPv4 only
+#    -P 5: use 5 parallel connections
+netUplink=$(iperf3 -c 35.223.83.97 -t 60 -4 -P 5 | grep -oP '\[SUM\].*?[0-9]+\.[0-9]+ Mbits\/sec.*?sender' | grep -oP '[0-9]+\.[0-9]+ Mbits' | grep -oP '[0-9]+\.[0-9]+')
+
 # Output the benchmark results as one CSV line
-echo "$time,$cpu,$mem,$diskSeq,$diskRand"
+echo "$time,$cpu,$mem,$diskSeq,$diskRand,$netUplink"
