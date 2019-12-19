@@ -1,0 +1,17 @@
+Experiment setup:
+
+- native host:
+    - OS: MacOS Catalina
+    - 4 CPU cores (Intel i7)
+    - 16 GB RAM
+    - SSD hard drive
+
+- experiment host:
+    - OS: Ubuntu 18.04.2 LTS
+    - 4 CPU cores
+    - 8 GB RAM
+
+- experiment guests (QEMU with and without KVM):
+    - OS: Ubuntu 18.04.2 LTS
+    - 4 CPU cores
+    - 8 GB RAM
