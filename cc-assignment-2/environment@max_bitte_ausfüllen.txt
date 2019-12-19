@@ -16,7 +16,6 @@ What experiment host do you use?
 
 How did you prepare/obtain your VM image?
 
-Further details
 -Nested virtualization with Parallels Pro for experiment host VM
 -QEMU and QEMU+KVM Machine with QEMU version 4.2.0
 	-OS: Ubuntu Live Server 18.04.2 manually installed or VM image used?
