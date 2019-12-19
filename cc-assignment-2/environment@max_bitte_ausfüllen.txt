@@ -1,0 +1,35 @@
+Task 1
+
+Hardware
+
+MacBook Pro 13” 20??
+CPU:
+RAM:
+DISK/SSD:
+OS: Mac OS ?
+
+What experiment host do you use?
+
+-Parallels Pro (Version ???) Virtual Machine running with Ubuntu Live Server 18.04.3 (full virtualization with hardware acceleration)
+-CPU: mit sudo lshw -C cpu  ?
+-RAM: mit sudo lshw -C memory  ?
+-Disk: mit sudo lsblk -o NAME,UUID,FSTYPE,SIZE,LABEL,MOUNTPOINT  ?
+-additionally installed sudo apt-get Build-essential
+
+How did you prepare/obtain your VM image?
+
+-Ubuntu installed manually on newly created image with QEMU?
+-*insert create command*
+
+Further details
+-Nested virtualization with Parallels Pro for experiment host VM
+-QEMU and QEMU+KVM Machine with QEMU version 4.2.0
+	-OS: Ubuntu Live Server 18.04.3? manually installed or VM image used?
+	-CPU:
+	-RAM:
+	-Disk:
+-Docker machine with Docker version 19.03
+	-Ubuntu Live Server 18.04.3 image?
+	-CPU:
+	-RAM:
+	-Disk:

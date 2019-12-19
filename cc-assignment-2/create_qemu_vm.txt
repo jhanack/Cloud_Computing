@@ -1,0 +1,7 @@
+
+qemu-img create -f qcow2 ubuntu_no_kvm.img 20G
+
+
+qemu-system-x86_64 -m 256 -hda ubuntu_no_kvm.img -cdrom /home/maxksoll/Documents/ubuntu-18.04.2-desktop-amd64.iso -boot d
+
+qemu-system-x86_64 disk_image -nic user,hostfwd=tcp::10022-:22

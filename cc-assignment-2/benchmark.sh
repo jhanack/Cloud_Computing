@@ -14,7 +14,7 @@ forks_per_second_total=0.0
 num_executions=0
 
 while [ $SECONDS -lt $end ]; do
-	forks_per_second_total=$(echo ${forks_per_second_total} + $(./forksum 100 3000 | grep -oP '[0-9]+\.[0-9]+' | awk '{temp = $1; printf("%f\n", temp)'}) | bc)
+	forks_per_second_total=$(echo ${forks_per_second_total} + $(./forksum 100 1000 | grep -oP '[0-9]+\.[0-9]+' | awk '{temp = $1; printf("%f\n", temp)'}) | bc)
 	num_executions=$(($num_executions + 1))
 done
 
@@ -47,7 +47,9 @@ diskRand=$(sysbench --time=$runtime --file-test-mode=rndrd --file-total-size=1G 
 #    -t 60: run benchmark for 60 seconds
 #    -4: use IPv4 only
 #    -P 5: use 5 parallel connections
-netUplink=$(iperf3 -c 35.223.83.97 -t 60 -4 -P 5 | grep -oP '\[SUM\].*?[0-9]+\.[0-9]+ Mbits\/sec.*?sender' | grep -oP '[0-9]+\.[0-9]+ Mbits' | grep -oP '[0-9]+\.[0-9]+')
+#    Switched to another server due to server error
+1>&2 echo "Running uplink test..."
+netUplink=$(iperf3 -c iperf.worldstream.nl -t $runtime -4 -P 5 | grep -oP '\[SUM\].*?[0-9]+\.[0-9]+ Mbits\/sec.*?sender' | grep -oP '[0-9]+\.[0-9]+ Mbits' | grep -oP '[0-9]+\.[0-9]+')
 
 # Output the benchmark results as one CSV line
 echo "$time,$cpu,$mem,$diskSeq,$diskRand,$forks_per_second_average,$netUplink"
