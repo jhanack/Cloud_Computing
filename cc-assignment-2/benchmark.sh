@@ -2,7 +2,7 @@
 
 # Record the Unix timestamp before starting the benchmarks.
 time=$(date +%s)
-runtime=5
+runtime=60
 
 # make c programm
 discard=$(make forksum)
@@ -10,15 +10,16 @@ discard=$(make forksum)
 # Calculate time to run
 end=$((SECONDS+runtime))
 
+forks_per_second_total=0.0
 num_executions=0
 
 while [ $SECONDS -lt $end ]; do
-	threads=$(./forksum 100 6000)
+	forks_per_second_total=$(echo ${forks_per_second_total} + $(./forksum 100 3000 | grep -oP '[0-9]+\.[0-9]+' | awk '{temp = $1; printf("%f\n", temp)'}) | bc)
 	num_executions=$(($num_executions + 1))
 done
 
-echo "$num_executions"
-
+forks_per_second_average=$(echo $forks_per_second_total / $num_executions | bc)
+1>&2 echo "avg forks per second: ${forks_per_second_average}"
 
 
 # Run the sysbench CPU test and extract the "events per second" line.
@@ -49,4 +50,4 @@ diskRand=$(sysbench --time=$runtime --file-test-mode=rndrd --file-total-size=1G 
 netUplink=$(iperf3 -c 35.223.83.97 -t 60 -4 -P 5 | grep -oP '\[SUM\].*?[0-9]+\.[0-9]+ Mbits\/sec.*?sender' | grep -oP '[0-9]+\.[0-9]+ Mbits' | grep -oP '[0-9]+\.[0-9]+')
 
 # Output the benchmark results as one CSV line
-echo "$time,$cpu,$mem,$diskSeq,$diskRand,$netUplink"
+echo "$time,$cpu,$mem,$diskSeq,$diskRand,$forks_per_second_average,$netUplink"
