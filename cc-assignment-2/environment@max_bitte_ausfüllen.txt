@@ -10,7 +10,7 @@ OS: Mac OS ?
 
 What experiment host do you use?
 
--Parallels Pro oder VMware Fusion oder QEMU? (Version ???) Virtual Machine running with Ubuntu Live Server 18.04.3
+-Parallels Pro (Version ???) Virtual Machine running with Ubuntu Live Server 18.04.3
 -CPU: mit sudo lshw -C cpu  ?
 -RAM: mit sudo lshw -C memory  ?
 -Disk: mit sudo lsblk -o NAME,UUID,FSTYPE,SIZE,LABEL,MOUNTPOINT  ?
@@ -22,7 +22,7 @@ How did you prepare/obtain your VM image?
 -*insert create command*
 
 Further details
--Nested virtualization with Parallels Pro oder VMware Fusion?
+-Nested virtualization with Parallels Pro for experiment host VM
 -QEMU and QEMU+KVM Machine with QEMU version 4.2.0
 	-OS: Ubuntu Live Server 18.04.3? manually installed or VM image used?
 	-CPU:
