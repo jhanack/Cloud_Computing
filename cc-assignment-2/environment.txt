@@ -1,0 +1,27 @@
+Task 1
+
+Hardware
+
+MacBook Pro 13” 20??
+CPU: 4 CPU cores (Intel i7)
+RAM: 16GB
+DISK/SSD: SSD
+OS: Mac OS Catalina
+
+What experiment host do you use?
+
+-Parallels Pro Virtual Machine running with Ubuntu Live Server 18.04.2 (full virtualization)
+-CPU: 4 cores
+-RAM: 8GB
+
+How did you prepare/obtain your VM image?
+
+-Nested virtualization with Parallels Pro for experiment host VM
+-QEMU and QEMU+KVM Machine with QEMU version 4.2.0
+	-OS: Ubuntu Live Server 18.04.2 manually installed or VM image used?
+	-CPU: 4 CPU cores
+	-RAM: 8GB
+-Docker machine with Docker version 19.03
+	-Ubuntu Live Server 18.04.3 image?
+	-CPU: 4 CPU cores
+	-RAM: 8GB
