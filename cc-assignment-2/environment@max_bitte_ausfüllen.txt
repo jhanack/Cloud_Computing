@@ -10,7 +10,7 @@ OS: Mac OS ?
 
 What experiment host do you use?
 
--Parallels Pro (Version ???) Virtual Machine running with Ubuntu Live Server 18.04.3
+-Parallels Pro (Version ???) Virtual Machine running with Ubuntu Live Server 18.04.3 (full virtualization with hardware acceleration)
 -CPU: mit sudo lshw -C cpu  ?
 -RAM: mit sudo lshw -C memory  ?
 -Disk: mit sudo lsblk -o NAME,UUID,FSTYPE,SIZE,LABEL,MOUNTPOINT  ?
