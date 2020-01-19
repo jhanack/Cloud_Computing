@@ -1,0 +1,11 @@
+Kubernetes master is running at https://10.156.0.16:6443
+coredns is running at https://10.156.0.16:6443/api/v1/namespaces/kube-system/services/coredns:dns/proxy
+kubernetes-dashboard is running at https://10.156.0.16:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+
+
+NAME    STATUS   ROLES    AGE   VERSION
+node1   Ready    master   18h   v1.16.3
+node2   Ready    master   18h   v1.16.3
+node3   Ready    master   18h   v1.16.3
