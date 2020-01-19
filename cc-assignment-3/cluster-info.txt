@@ -1,3 +1,5 @@
+Output from kubectl cluster-info
+
 Kubernetes master is running at https://10.156.0.16:6443
 coredns is running at https://10.156.0.16:6443/api/v1/namespaces/kube-system/services/coredns:dns/proxy
 kubernetes-dashboard is running at https://10.156.0.16:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
@@ -5,7 +7,14 @@ kubernetes-dashboard is running at https://10.156.0.16:6443/api/v1/namespaces/ku
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 
 
+Output from kubectl get node
+
 NAME    STATUS   ROLES    AGE   VERSION
 node1   Ready    master   18h   v1.16.3
 node2   Ready    master   18h   v1.16.3
 node3   Ready    master   18h   v1.16.3
+
+
+sudo cp /etc/kubernetes/admin.conf $HOME/
+sudo chown $(id -u):$(id -g) $HOME/admin.conf
+export KUBECONFIG=$HOME/admin.conf
