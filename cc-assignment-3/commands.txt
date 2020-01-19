@@ -1,0 +1,14 @@
+
+## Build docker files for front-/backend
+docker build -t backend-nginx .
+docker build -t frontend-nginx .
+
+## Login to docker hub (will prompt for username and password)
+docker login
+
+## Collect ids for build images (needed for further steps)
+docker images
+
+## Create tags for images (with previously collected ids)
+docker tag 9ce110fd6e13 maxksoll/backend-nginx:backend
+docker tag 6bd19af0bd89 maxksoll/frontend-nginx:frontend
