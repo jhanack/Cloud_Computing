@@ -22,11 +22,11 @@
       replicas: 6
       selector:
        matchLabels:
-        app: nginx
+        app: nginx-backend
       template:
        metadata:
         labels:
-         app: nginx
+         app: nginx-backend
        spec:
         containers:
         - name: nginx
@@ -48,14 +48,47 @@
       replicas: 4
       selector:
        matchLabels:
-        app: nginx
+        app: nginx-frontend
       template:
        metadata:
         labels:
-         app: nginx
+         app: nginx-frontend
        spec:
         containers:
         - name: nginx
           image: jannoh/janno:frontend
           ports:
           - containerPort: 80
+
+- name: Create a Service object for backend-service
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: group01-backend-service
+        namespace: group01
+      spec:
+        selector:
+          app: nginx-backend
+        ports:
+        - protocol: TCP
+          port: 80
+
+- name: Create a Service object for frontend-service
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: group01-frontend-service
+        namespace: group01
+      spec:
+        selector:
+          app: nginx-frontend
+        ports:
+        - protocol: TCP
+          port: 80
+        type: NodePort
