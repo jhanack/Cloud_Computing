@@ -33,6 +33,23 @@
           image: jannoh/janno:backend
           ports:
           - containerPort: 80
+          livenessProbe:
+           httpGet:
+            path: /ready
+            port: 8080
+            httpHeaders:
+            - name: Custom-Header
+              value: Awesome
+           initialDelaySeconds: 3
+           periodSeconds: 3
+           httpGet:
+            path: /ready
+            port: 8080
+            httpHeaders:
+            - name: Custom-Header2
+              value: Awesome
+           initialDelaySeconds: 3
+           periodSeconds: 3
 
 - name: Create a Deployment for frontend-service
   k8s:
@@ -59,6 +76,24 @@
           image: jannoh/janno:frontend
           ports:
           - containerPort: 80
+          livenessProbe:
+           httpGet:
+            path: /ready
+            port: 8080
+            httpHeaders:
+            - name: Custom-Header
+              value: Awesome
+           initialDelaySeconds: 3
+           periodSeconds: 3
+          readinessProbe:
+           httpGet:
+            path: /ready
+            port: 8080
+            httpHeaders:
+            - name: Custom-Header2
+              value: Awesome
+           initialDelaySeconds: 3
+           periodSeconds: 3
 
 - name: Create a Service object for backend-service
   k8s:
