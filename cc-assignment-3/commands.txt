@@ -13,5 +13,8 @@ docker login
 docker images
 
 ## Create tags for images (with previously collected ids)
-docker tag 9ce110fd6e13 maxksoll/backend-nginx:backend
-docker tag 6bd19af0bd89 maxksoll/frontend-nginx:frontend
+docker tag 9ce110fd6e13 maxksoll/cc-assignment3:backend
+docker tag 6bd19af0bd89 maxksoll/cc-assignment3:frontend
+
+docker push maxksoll/cc-assignment3:frontend
+docker push maxksoll/cc-assignment3:backend
