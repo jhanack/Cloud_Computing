@@ -1,6 +1,9 @@
 
-## Build docker files for front-/backend
+## Build docker files for front-/backend (files are located in subfolders in our setup)
+cd backend
 docker build -t backend-nginx .
+
+cd ../frontend
 docker build -t frontend-nginx .
 
 ## Login to docker hub (will prompt for username and password)
