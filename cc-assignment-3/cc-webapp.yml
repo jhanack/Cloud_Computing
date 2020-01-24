@@ -1,131 +1,97 @@
 - hosts: all
   tasks:
     - pip:
-      name: openshift
+        name: openshift
 
     - name: Create a k8s namespace
       k8s:
         name: group01
         api_version: v1
         kind: Namespace
-        state: present
 
     - name: Create a Deployment for backend-service
       k8s:
-        state: present
-        definition:  
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          name: cc-backend-service
-          labels:
-          app: nginx
-        spec:
-          replicas: 6
-          selector:
-          matchLabels:
-            app: nginx-backend
-          template:
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
           metadata:
-            labels:
-            app: nginx-backend
+            name: cc-backend-service
+            namespace: group01
           spec:
-            containers:
-            - name: nginx
-              image: jannoh/janno:backend
-              ports:
-              - containerPort: 80
-              livenessProbe:
-              httpGet:
-                path: /ready
-                port: 8080
-                httpHeaders:
-                - name: Custom-Header
-                  value: Awesome
-              initialDelaySeconds: 3
-              periodSeconds: 3
-              httpGet:
-                path: /ready
-                port: 8080
-                httpHeaders:
-                - name: Custom-Header2
-                  value: Awesome
-              initialDelaySeconds: 3
-              periodSeconds: 3
-
-    - name: Create a Deployment for frontend-service
-      k8s:
-        state: present
-        definition:  
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          name: cc-frontend-service
-          labels:
-          app: nginx
-        spec:
-          replicas: 4
-          selector:
-          matchLabels:
-            app: nginx-frontend
-          template:
-          metadata:
-            labels:
-            app: nginx-frontend
-          spec:
-            containers:
-            - name: nginx
-              image: jannoh/janno:frontend
-              ports:
-              - containerPort: 80
-              livenessProbe:
-              httpGet:
-                path: /ready
-                port: 8080
-                httpHeaders:
-                - name: Custom-Header
-                  value: Awesome
-              initialDelaySeconds: 3
-              periodSeconds: 3
-              readinessProbe:
-              httpGet:
-                path: /ready
-                port: 8080
-                httpHeaders:
-                - name: Custom-Header2
-                  value: Awesome
-              initialDelaySeconds: 3
-              periodSeconds: 3
+            selector:
+              matchLabels:
+                app: cc-backend-service
+            replicas: 4
+            template:
+              metadata:
+                labels:
+                  app: cc-backend-service
+              spec:
+                containers:
+                  - name: cc-backend-service
+                    image: maxksoll/cc-assignment3:backend
+                    ports:
+                      - name: backend-port
+                        containerPort: 80
 
     - name: Create a Service object for backend-service
       k8s:
-        state: present
         definition:
           apiVersion: v1
           kind: Service
           metadata:
-            name: group01-backend-service
+            name: cc-backend-service
+            namespace: group01
+            labels:
+              app: cc-backend-service
+          spec:
+            ports:
+              - protocol: TCP
+                port: 80
+                targetPort: backend-port
+            selector:
+              app: cc-backend-service
+
+    - name: Create a Deployment for frontend-service
+      k8s:
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: cc-frontend-service
             namespace: group01
           spec:
             selector:
-              app: nginx-backend
-            ports:
-            - protocol: TCP
-              port: 80
+              matchLabels:
+                app: cc-frontend-service
+            replicas: 6
+            template:
+              metadata:
+                labels:
+                  app: cc-frontend-service
+              spec:
+                containers:
+                  - name: cc-frontend-service-container
+                    image: maxksoll/cc-assignment3:frontend
+
+
+
 
     - name: Create a Service object for frontend-service
       k8s:
-        state: present
         definition:
           apiVersion: v1
           kind: Service
           metadata:
-            name: group01-frontend-service
+            name: cc-frontend-service
             namespace: group01
+            labels:
+              app: cc-frontend-service
           spec:
-            selector:
-              app: nginx-frontend
-            ports:
-            - protocol: TCP
-              port: 80
             type: NodePort
+            ports:
+              - port: 80
+                targetPort: 80
+                protocol: TCP
+            selector:
+              app: cc-frontend-service
