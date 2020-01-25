@@ -74,9 +74,6 @@
                   - name: cc-frontend-service
                     image: jannoh/janno:frontend
 
-
-
-
     - name: Create a Service object for frontend-service
       k8s:
         definition:

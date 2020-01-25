@@ -16,9 +16,15 @@ docker images
 docker tag 9ce110fd6e13 maxksoll/cc-assignment3:backend
 docker tag 6bd19af0bd89 maxksoll/cc-assignment3:frontend
 
+## Push images to Docker Hub Repository
 docker push maxksoll/cc-assignment3:frontend
 docker push maxksoll/cc-assignment3:backend
 
+## Run playbook with created inventory file
 ansible-playbook -i inventory/local/hosts.ini --private-key ~/.ssh/ida_rsa -l node1 cc-webapp.yml
 
+## Get NodePort
 kubectl get all
+
+## Run test Python script, invoked with host IPs and NodePorts
+python test-deployment.py 34.69.43.157:30037 35.184.22.71:30037 35.188.74.241:30037
