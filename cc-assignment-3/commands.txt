@@ -18,3 +18,5 @@ docker tag 6bd19af0bd89 maxksoll/cc-assignment3:frontend
 
 docker push maxksoll/cc-assignment3:frontend
 docker push maxksoll/cc-assignment3:backend
+
+ansible-playbook -i inventory/local/hosts.ini --private-key ~/.ssh/ida_rsa -l node1 cc-webapp.yml
