@@ -29,7 +29,7 @@
               spec:
                 containers:
                   - name: cc-backend-service
-                    image: maxksoll/cc-assignment3:backend
+                    image: jannoh/janno:backend
                     ports:
                       - name: backend-port
                         containerPort: 80
@@ -71,8 +71,8 @@
                   app: cc-frontend-service
               spec:
                 containers:
-                  - name: cc-frontend-service-container
-                    image: maxksoll/cc-assignment3:frontend
+                  - name: cc-frontend-service
+                    image: jannoh/janno:frontend
 
 
 
