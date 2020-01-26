@@ -13,8 +13,3 @@ NAME    STATUS   ROLES    AGE   VERSION
 node1   Ready    master   18h   v1.16.3
 node2   Ready    master   18h   v1.16.3
 node3   Ready    master   18h   v1.16.3
-
-
-sudo cp /etc/kubernetes/admin.conf $HOME/
-sudo chown $(id -u):$(id -g) $HOME/admin.conf
-export KUBECONFIG=$HOME/admin.conf
