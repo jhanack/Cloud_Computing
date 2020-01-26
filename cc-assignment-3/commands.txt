@@ -24,7 +24,7 @@ docker push maxksoll/cc-assignment3:backend
 ansible-playbook -i inventory/local/hosts.ini --private-key ~/.ssh/ida_rsa -l node1 cc-webapp.yml
 
 ## Get NodePort
-kubectl get all
+kubectl get all --namespace group01
 
 ## Run test Python script, invoked with host IPs and NodePorts
 python test-deployment.py 34.69.43.157:30037 35.184.22.71:30037 35.188.74.241:30037

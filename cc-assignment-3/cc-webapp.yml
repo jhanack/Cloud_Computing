@@ -33,6 +33,24 @@
                     ports:
                       - name: backend-port
                         containerPort: 80
+                    livenessProbe:
+                      httpGet:
+                        path: /ready
+                        port: 80
+                        httpHeaders:
+                        - name: Custom-Header
+                          value: Awesome
+                      initialDelaySeconds: 3
+                      periodSeconds: 3
+                    readinessProbe:
+                      httpGet:
+                        path: /ready
+                        port: 80
+                        httpHeaders:
+                        - name: Custom-Header2
+                          value: Awesome
+                      initialDelaySeconds: 3
+                      periodSeconds: 3
 
     - name: Create a Service object for backend-service
       k8s:
@@ -73,6 +91,24 @@
                 containers:
                   - name: cc-frontend-service
                     image: jannoh/janno:frontend
+                    livenessProbe:
+                      httpGet:
+                        path: /ready
+                        port: 80
+                        httpHeaders:
+                        - name: Custom-Header
+                          value: Awesome
+                      initialDelaySeconds: 3
+                      periodSeconds: 3
+                    readinessProbe:
+                      httpGet:
+                        path: /ready
+                        port: 80
+                        httpHeaders:
+                        - name: Custom-Header2
+                          value: Awesome
+                      initialDelaySeconds: 3
+                      periodSeconds: 3
 
     - name: Create a Service object for frontend-service
       k8s:
