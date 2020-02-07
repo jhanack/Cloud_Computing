@@ -1,5 +1,19 @@
 Which steps in your program require communication and synchronization between your workers?
 
+- The program is split into four parts: 1. Data Source, 2. GroupReduce, 3. Sort-Partition and 4. Data Sink
+    1. Data Source:
+        Within this step there is no need for communication and synchronization, because the data is read
+        within one instance and only split afterwards.
+    2. GroupReduce:
+        Now the work is split and is processed independently and only afterwards the results need to be forwarded to the sorting part. All related results are processed together within this step.
+    3. Sort-Partition:
+        Since the data needs to be sorted globally, there is a need for communication between all nodes.
+    4. Data Sink:
+        Outputting the results needs to be synchronized and therefor communication is required.
+
 What resources is the job bound by? Memory? CPU? Network? Disk?
+    Most work is done at I/O (Disk access) and when the work was split between the nodes also Network overhead was introduced to the overhead.
 
 Could you improve the partitioning of your data to yield better runtime?
+    Since the data set is very small partitioning wouldn't introduce a better performance.
+    Processing it on a single node would increase the speed unless the data set would grow drastically.
