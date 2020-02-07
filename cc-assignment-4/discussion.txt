@@ -1,0 +1,5 @@
+Which steps in your program require communication and synchronization between your workers?
+
+What resources is the job bound by? Memory? CPU? Network? Disk?
+
+Could you improve the partitioning of your data to yield better runtime?

@@ -1,0 +1,22 @@
+// Needs to be executed on the master (mentioned in /flink/conf/flink-conf.yaml)
+// and automatically creates connection to all slaves (mentioned in /flink/conf/slaves).
+// N ssh session are now managing the execution over all machines.
+./bin/start-cluster.sh
+
+// Task managers are required to run enable execution in parallel
+// this can be done on the host machine and will distribute the work over all
+// slaves.
+./bin/taskmanager.sh start
+
+// To execute a command the run command needs to be passed to the flink executable
+// and by setting parallelism to 3 (through -p parameter) the work will be
+// distributed over all machines.
+./bin/flink run -p 3 ../WordCount-1.0-SNAPSHOT.jar
+
+
+// Closes all session for task managers
+./bin/taskmanager.sh stop-all
+
+
+// Shuts down the cluster
+./bin/stop-cluster.sh
