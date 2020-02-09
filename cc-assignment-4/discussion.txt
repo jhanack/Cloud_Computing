@@ -12,8 +12,8 @@ Which steps in your program require communication and synchronization between yo
         Outputting the results needs to be synchronized and therefore communication is required.
 
 What resources is the job bound by? Memory? CPU? Network? Disk?
-    Most work is done at I/O (Disk access) and when the work was split between the nodes also Network overhead was introduced to the overhead.
+    Most work is done at I/O (Disk access) and when the work was split between the nodes also Network overhead started adding to the overhead.
 
 Could you improve the partitioning of your data to yield better runtime?
-    Since the data set is very small partitioning wouldn't introduce a better performance.
+    Since the data set is very small, partitioning wouldn't introduce a better performance.
     Processing it on a single node would increase the speed unless the data set would grow drastically.
