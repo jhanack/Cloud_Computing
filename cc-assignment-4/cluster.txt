@@ -14,7 +14,7 @@
 ./bin/flink run -p 3 ../WordCount-1.0-SNAPSHOT.jar
 
 
-// Closes all session for task managers
+// Closes all sessions for task managers
 ./bin/taskmanager.sh stop-all
 
 
