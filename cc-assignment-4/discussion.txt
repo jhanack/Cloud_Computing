@@ -9,7 +9,7 @@ Which steps in your program require communication and synchronization between yo
     3. Sort-Partition:
         Since the data needs to be sorted globally, there is a need for communication between all nodes.
     4. Data Sink:
-        Outputting the results needs to be synchronized and therefor communication is required.
+        Outputting the results needs to be synchronized and therefore communication is required.
 
 What resources is the job bound by? Memory? CPU? Network? Disk?
     Most work is done at I/O (Disk access) and when the work was split between the nodes also Network overhead was introduced to the overhead.
